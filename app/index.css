@@ -1,0 +1,15 @@
+
+.layout-info{
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    margin-bottom: 0;
+    width: 100%;
+}
+.layout-error{
+    display: block;
+    position: fixed;
+    bottom: 32px;
+    margin-bottom: 0;
+    width: 100%;
+}

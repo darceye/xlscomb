@@ -1,0 +1,27 @@
+{
+  "name": "xls-combiner",
+  "version": "1.0.0",
+  "description": "Combine XLS together",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "iconv-lite": "^0.4.17",
+    "iview": "^2.0.0-rc.13",
+    "lodash": "^4.17.4",
+    "vue": "^2.3.3",
+    "xlsx": "^0.10.3"
+  }
+}

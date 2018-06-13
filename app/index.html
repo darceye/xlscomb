@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>EXCEL合并器</title>
+    <link rel="stylesheet" href="./node_modules/iview/dist/styles/iview.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/iview/dist/iview.min.js"></script>
+    <script src='./src/js/ele.js'></script>
+    <script src='./src/js/xlsreader.js'></script>
+    <script src="./node_modules/lodash/lodash.min.js"></script>
+
+  </head>
+  <body  style='background-color: #eee'>
+<div id="app">
+
+    <Modal v-model="isAddOutputData" title="增加新的输出列" @on-ok='addOutputData'>
+        <i-input v-model="newOutput.name" placeholder="请输入输出列的名称" style="width: 300px" size='large'></i-input>
+        <br><br>
+        <i-input v-model="newOutput.cell" placeholder="请输入输出列的单元格引用" style="width: 300px" size='large'></i-input>
+      
+    </Modal>
+
+
+    <Row>
+      <i-col span="6" id="c-left" style='padding:10px'>
+      <Card  :bordered="false">
+            <p slot='title'>
+              要合并的加密文件列表
+            </p>
+            <p>
+           <i-input :type='passwordType' v-model="filePassword" placeholder="请输入密码" >
+            <i-button slot='append' icon='eye' @click='togglePasswordView'>     </i-button>
+          </i-input>
+           <i-button @click="openEncFiles()"  type='primary' size='small'>增加</i-button>
+            <i-button type='primary' size='small' @click='decrypt'>解密</i-button>
+          </p>
+          <p>已经添加了{{encFilesData.length}}个文件</p>
+          <p>
+            <i-table stripe :columns="encFilesTitles" :data="encFilesData"></i-table>
+       
+            
+          </p>
+        </Card>
+      </i-col>
+      <i-col span="6" id="c-middle"  style='padding:10px'>
+        <Card  :bordered="false">
+            <p slot='title'>
+              要合并的未加密文件列表
+            </p>
+            <p>
+            <i-button @click="openFiles()"  type='primary' size='small'>增加</i-button>
+            <i-button type='primary' size='small' @click='loadDecrypted'>加载解密后文件</i-button>
+          </p>
+          <p>已经添加了{{filesData.length}}个文件</p>
+          <p>
+          <i-table stripe :columns="filesTitles" :data="filesData"></i-table>
+          </p>
+        </Card>      
+      </i-col>
+
+      <i-col span="12" id="c-right" style='padding:10px'>
+      <Card  :bordered="false">
+      <p slot='title'>设置</p>
+      <p slot='extra'>
+        <i-button type='primary' size='small' @click="saveSettings()">保存设置</i-button>
+      </p>
+      <p>
+        
+      <table>
+        <tr>
+        <td>读取工作表名</td>
+        <td>
+        <i-input v-model="sheetName" placeholder="请输入工作表名" ></i-input>
+        </td>
+        </tr>
+        <tr>
+          <td>输出文件名</td>
+          <td>
+            
+        <i-button @click="openOutputFile" type='primary' size='small'>选择文件</i-button>
+        {{outputFile}}
+          </td>
+        </tr>
+      </table>
+      </p>
+      </Card>
+      <br>
+      <Card  :bordered="false">
+        <p slot='title'>输出列表</p>
+        <p>
+          <i-button @click='showAddOutput' type='primary' size='small'>增加</i-button>
+          
+        </p>
+        <p>
+          <i-table stripe :columns="outputTitles" :data="outputData"></i-table>
+        </p>
+      </Card>
+      <br>
+      <i-progress :percent="combineProgress" :v-show='isShowCombineProgress'></i-progress>
+      <br>
+      <i-button type='primary' size='large' :loading='isCombining' @click='combine'>
+        <span v-if='!isCombining'>执行合并</span>
+        <span v-else>执行中..</span>
+      </i-button>
+      <i-button type='primary' size='large' @click='viewCombined'>查看合并后文件</i-button>
+      <br><br><br><br><br>
+      </i-col>
+    </Row>
+      <Alert type='error' v-show='!(error === "")' class="layout-error">
+      {{error}}
+      </Alert>
+      <Alert class="layout-info">
+      {{info}}
+      </Alert>
+
+
+</div>
+
+  </body>
+  
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+
+    // require('./index.js')
+  </script>
+  <script src='./index.js'></script>
+
+ 
+</html>
